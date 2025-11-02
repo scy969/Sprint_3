@@ -45,6 +45,24 @@ class OnlineSalesRegisterCollector:
 
         return total_sum
 
+    def twenty_percent_tax_calculation(self):
+        twenty_percent_tax = []
+        total = []
+
+        for item_name in self.__name_items:
+            if self.__tax_rate[item_name] == 20:
+                twenty_percent_tax.append(item_name)
+                total.append(self.__item_price[item_name])
+
+        total_sum = sum(total)
+
+        if self.__number_items > 10:
+            total_sum = total_sum * 0.9
+
+        tax_amount = total_sum * 0.2
+
+        return tax_amount
+
     def ten_percent_tax_calculation(self):
         ten_percent_tax = []
         total = []
@@ -65,12 +83,7 @@ class OnlineSalesRegisterCollector:
 
     def total_tax(self):
 
-        total_tax_amount = sum(
-            self.__item_price[item_name] * (self.__tax_rate[item_name] / 100)
-            for item_name in self.__name_items
-        )
-
-        return total_tax_amount
+        return self.ten_percent_tax_calculation() + self.twenty_percent_tax_calculation()
 
     @staticmethod
     def get_telephone_number(telephone_number):
